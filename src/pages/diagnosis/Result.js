@@ -9,8 +9,11 @@ import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
 
 //import axios
 import axios from 'axios';
+import configs from "../../global_config";
 
 function RelationIndex() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //define state
     const [diagnosis, setDiagnosis] = useState('');
@@ -30,7 +33,7 @@ function RelationIndex() {
     const deleteRelation = async (id) => {
 
         //sending
-        await axios.delete(`http://localhost:9023/diagnosis/${id}`);
+        await axios.delete(`${url}/diagnosis/${id}`);
 
         //panggil function "fetchData"
         fectData();
@@ -39,7 +42,7 @@ function RelationIndex() {
     //function "fetchData"
     const fectData = async () => {
         //fetching
-        const response = await axios.get(`http://localhost:9023/getDiagnosis/${patientId}`);
+        const response = await axios.get(`${url}/getDiagnosis/${patientId}`);
         //get response data
         const data = await response.data.data;
 

@@ -10,7 +10,11 @@ import axios from 'axios';
 //import hook history dari react router dom
 import { useHistory } from "react-router-dom";
 
+import configs from "../../global_config";
+
 function CreateSymptom() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //state
     const [symptomCode, setSymptomCode] = useState('');
@@ -29,7 +33,7 @@ function CreateSymptom() {
         e.preventDefault();
 
         //send data to server
-        await axios.post('http://localhost:9023/symptom', {
+        await axios.post(`${url}/symptom`, {
             symptomCode: symptomCode,
             symptomName: symptomName,
             category: category,

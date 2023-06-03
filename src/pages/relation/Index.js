@@ -10,7 +10,11 @@ import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
 //import axios
 import axios from 'axios';
 
+import configs from "../../global_config";
+
 function RelationIndex() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //define state
     const [relations, setRelations] = useState([]);
@@ -29,7 +33,7 @@ function RelationIndex() {
         let deleteMessage = window.confirm("Data akan dihapus secara permanen.");
         if (deleteMessage) {
             //sending
-            await axios.delete(`http://localhost:9023/relation/${id}`);
+            await axios.delete(`${url}/relation/${id}`);
         }
 
         //panggil function "fetchData"
@@ -39,7 +43,7 @@ function RelationIndex() {
     //function "fetchData"
     const fectData = async () => {
         //fetching
-        const response = await axios.get('http://localhost:9023/getRelation');
+        const response = await axios.get(`${url}/getRelation`);
         //get response data
         const data = await response.data.data;
 

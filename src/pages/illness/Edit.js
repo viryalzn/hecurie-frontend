@@ -10,7 +10,11 @@ import axios from 'axios';
 //import hook history dan params dari react router dom
 import { useHistory, useParams } from "react-router-dom";
 
+import configs from "../../global_config";
+
 function EditIllness() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //state
     // const [illnessCode, setIllnessCode] = useState('');
@@ -41,7 +45,7 @@ function EditIllness() {
     const getIllnessById = async() => {
 
         //get data from server
-        const response = await axios.get(`http://localhost:9023/getIllness/${illnessId}`);
+        const response = await axios.get(`${url}/getIllness/${illnessId}`);
         console.log(response)
         //get response data
         const data = await response.data.data
@@ -59,7 +63,7 @@ function EditIllness() {
         e.preventDefault();
 
         //send data to server
-        await axios.put(`http://localhost:9023/illness/${illnessId}`, {
+        await axios.put(`${url}/illness/${illnessId}`, {
             illnessId: illnessId,
             illnessName: illnessName,
             explanation: explanation,

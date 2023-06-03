@@ -11,7 +11,11 @@ import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
 import { MDBCheckbox } from "mdb-react-ui-kit";
 
+import configs from "../../global_config";
+
 function EditRelation() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //define state
     const [illnesses, setIllnesses] = useState([]);
@@ -43,12 +47,12 @@ function EditRelation() {
 
     const fectData = async () => {
         //fetching
-        const responseIllness = await axios.get('http://localhost:9023/getIllness');
+        const responseIllness = await axios.get(`${url}/getIllness`);
         //get response data
         const dataIllness = await responseIllness.data.data;
 
         //fetching
-        const responseSymptom = await axios.get('http://localhost:9023/getSymptom');
+        const responseSymptom = await axios.get(`${url}/getSymptom`);
         //get response data
         const dataSymptom = await responseSymptom.data.data;
 
@@ -62,7 +66,7 @@ function EditRelation() {
     const getRelationById = async() => {
 
         //get data from server
-        const response = await axios.get(`http://localhost:9023/getRelation/${relationId}`);
+        const response = await axios.get(`${url}/getRelation/${relationId}`);
 
         //get response data
         const data = await response.data.data
@@ -104,7 +108,7 @@ function EditRelation() {
         e.preventDefault();
 
         //send data to server
-        await axios.put(`http://localhost:9023/relation/${relationId}`, {
+        await axios.put(`${url}/relation/${relationId}`, {
             relationId: relationId,
             symptomCode: arr
         })

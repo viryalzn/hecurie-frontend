@@ -10,7 +10,11 @@ import axios from 'axios';
 //import hook history dan params dari react router dom
 import { useHistory, useParams } from "react-router-dom";
 
+import configs from "../../global_config";
+
 function EditSymptom() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //state
     // const [illnessCode, setIllnessCode] = useState('');
@@ -38,7 +42,7 @@ function EditSymptom() {
     const getSymptomById = async() => {
 
         //get data from server
-        const response = await axios.get(`http://localhost:9023/getSymptom/${symptomId}`);
+        const response = await axios.get(`${url}/getSymptom/${symptomId}`);
         console.log(response)
         //get response data
         const data = await response.data.data
@@ -55,7 +59,7 @@ function EditSymptom() {
         e.preventDefault();
 
         //send data to server
-        await axios.put(`http://localhost:9023/symptom/${symptomId}`, {
+        await axios.put(`${url}/symptom/${symptomId}`, {
             symptomId: symptomId,
             symptomName: symptomName,
             belief: belief

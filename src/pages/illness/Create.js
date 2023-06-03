@@ -10,7 +10,11 @@ import axios from 'axios';
 //import hook history dari react router dom
 import { useHistory } from "react-router-dom";
 
+import configs from "../../global_config";
+
 function CreateIllness() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //state
     const [illnessCode, setIllnessCode] = useState('');
@@ -29,7 +33,7 @@ function CreateIllness() {
         e.preventDefault();
 
         //send data to server
-        await axios.post('http://localhost:9023/illness', {
+        await axios.post(`${url}/illness`, {
             illnessCode: illnessCode,
             illnessName: illnessName,
             explanation: explanation,

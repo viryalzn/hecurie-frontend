@@ -12,7 +12,11 @@ import { useHistory } from "react-router-dom";
 
 import { MDBCheckbox } from "mdb-react-ui-kit";
 
+import configs from "../../global_config";
+
 function CreateRelation() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //define state
     const [illnesses, setIllnesses] = useState([]);
@@ -36,12 +40,12 @@ function CreateRelation() {
 
     const fectData = async () => {
         //fetching
-        const responseIllness = await axios.get('http://localhost:9023/getIllness');
+        const responseIllness = await axios.get(`${url}/getIllness`);
         //get response data
         const dataIllness = await responseIllness.data.data;
 
         //fetching
-        const responseSymptom = await axios.get('http://localhost:9023/getSymptom');
+        const responseSymptom = await axios.get(`${url}/getSymptom`);
         //get response data
         const dataSymptom = await responseSymptom.data.data;
 
@@ -61,7 +65,7 @@ function CreateRelation() {
         e.preventDefault();
 
         //send data to server
-        await axios.post('http://localhost:9023/relation', {
+        await axios.post(`${url}/relation`, {
             illnessCode: illnessCode,
             symptomCode: arr
         })

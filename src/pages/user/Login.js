@@ -10,7 +10,11 @@ import axios from 'axios';
 //import hook history dari react router dom
 import { useHistory } from "react-router-dom";
 
+import configs from "../../global_config";
+
 function Login() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //state
     const [username, setUsername] = useState('');
@@ -27,7 +31,7 @@ function Login() {
         e.preventDefault();
 
         //send data to server
-        await axios.post('http://localhost:9023/user/login', {
+        await axios.post(`${url}/user/login`, {
             username: username,
             password: password
         })

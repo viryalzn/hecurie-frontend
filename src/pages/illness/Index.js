@@ -10,7 +10,11 @@ import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
 //import axios
 import axios from 'axios';
 
+import configs from "../../global_config";
+
 function IllnessIndex() {
+
+    const url = configs.CONFIG.API_BASEURL;
 
     //define state
     const [illnesses, setIllnesses] = useState([]);
@@ -29,7 +33,7 @@ function IllnessIndex() {
         let deleteMessage = window.confirm("Data akan dihapus secara permanen.");
         if (deleteMessage) {
             //sending
-            await axios.delete(`http://localhost:9023/illness/${id}`);
+            await axios.delete(`${url}/illness/${id}`);
         }
 
         //panggil function "fetchData"
@@ -39,7 +43,7 @@ function IllnessIndex() {
     //function "fetchData"
     const fectData = async () => {
         //fetching
-        const response = await axios.get('http://localhost:9023/getIllness');
+        const response = await axios.get(`${url}/getIllness`);
         //get response data
         const data = await response.data.data;
 
