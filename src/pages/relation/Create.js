@@ -111,7 +111,7 @@ function CreateRelation() {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Gelaja</Form.Label>
+                                    <Form.Label>Gejala</Form.Label>
                                     { symptoms.map(symptom => (
                                         <MDBCheckbox value={symptom.symptomCode} type="checkbox" label={symptom.symptomName} />
                                     ))}

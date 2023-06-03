@@ -8,15 +8,6 @@ import { Switch, Route, Link } from "react-router-dom";
 import Home from './pages/Home'
 
 //import component Post Index
-import PostIndex from './pages/posts/Index'
-
-//import component Post Create
-import PostCreate from './pages/posts/Create'
-
-//import component Post Edit
-import PostEdit from './pages/posts/Edit'
-
-//import component Post Index
 import IllnessIndex from './pages/illness/Index'
 
 //import component Post Create
@@ -52,12 +43,15 @@ import DiagnosisResult from './pages/diagnosis/Result'
 //import component Post Edit
 import DiagnosisEdit from './pages/diagnosis/Edit'
 
+import Login from './pages/user/Login'
+
 function App() {
     return (
         <div>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand to="/">EXPRESS.JS + REACT.JS</Navbar.Brand>
+                    <img src="../public/logo-hecurie.png" alt="..."/>
+                    <Navbar.Brand to="/">H`ECURIE</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
@@ -67,15 +61,16 @@ function App() {
                             <Nav.Link as={Link} to="/relation" className="nav-link">RELASI</Nav.Link>
                             <Nav.Link as={Link} to="/diagnosis" className="nav-link">DIAGNOSIS</Nav.Link>
                         </Nav>
+                        <Nav className="nav navbar-nav navbar-right">
+                            <Nav.Link as={Link} to="/login" class="button">LOGIN</Nav.Link>
+                            {/*<button className="btn btn-outline-secondary navbar-btn" to="/login">Login</button>*/}
+                        </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
 
             <Switch>
                 <Route exact path="/" component={Home} />
-                {/*<Route exact path="/posts" component={PostIndex} />*/}
-                {/*<Route exact path="/posts/create" component={PostCreate} />*/}
-                {/*<Route exact path="/posts/edit/:illnessId" component={PostEdit} />*/}
                 <Route exact path="/illness" component={IllnessIndex} />
                 <Route exact path="/illness/create" component={IllnessCreate} />
                 <Route exact path="/illness/edit/:illnessId" component={IllnessEdit} />
@@ -88,6 +83,7 @@ function App() {
                 <Route exact path="/diagnosis" component={DiagnosisIndex} />
                 <Route exact path="/diagnosis/result/:patientId" component={DiagnosisResult} />
                 <Route exact path="/diagnosis/edit/:patientId" component={DiagnosisEdit} />
+                <Route exact path="/login" component={Login} />
             </Switch>
 
         </div>

@@ -10,13 +10,11 @@ import axios from 'axios';
 //import hook history dari react router dom
 import { useHistory } from "react-router-dom";
 
-function CreateSymptom() {
+function Login() {
 
     //state
-    const [symptomCode, setSymptomCode] = useState('');
-    const [symptomName, setSymptomName] = useState('');
-    const [belief, setBelief] = useState('');
-    const [category, setCategory] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     //state validation
     const [validation, setValidation] = useState({});
@@ -29,16 +27,14 @@ function CreateSymptom() {
         e.preventDefault();
 
         //send data to server
-        await axios.post('http://localhost:9023/symptom', {
-            symptomCode: symptomCode,
-            symptomName: symptomName,
-            category: category,
-            belief: belief
+        await axios.post('http://localhost:9023/user/login', {
+            username: username,
+            password: password
         })
             .then(() => {
 
                 //redirect
-                history.push('/symptom');
+                history.push('/');
 
             })
             .catch((error) => {
@@ -70,27 +66,17 @@ function CreateSymptom() {
                             <Form onSubmit={ storeSymptom }>
 
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Kode Gejala</Form.Label>
-                                    <Form.Control type="text" value={symptomCode} onChange={(e) => setSymptomCode(e.target.value)} placeholder="Masukkan Kode Gejala" />
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Masukkan username atau email" />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Nama Gejala</Form.Label>
-                                    <Form.Control type="text" value={symptomName} onChange={(e) => setSymptomName(e.target.value)} placeholder="Masukkan Nama Gejala" />
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Kategori</Form.Label>
-                                    <Form.Control type="text" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Masukkan Kategori" />
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Nilai Belief</Form.Label>
-                                    <Form.Control type="text" value={belief} onChange={(e) => setBelief(e.target.value)} placeholder="Masukkan Nilai Belief" />
+                                <Form.Group className="mb-3" controlId="password">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Masukkan password" />
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">
-                                    SIMPAN
+                                    Login
                                 </Button>
                             </Form>
                         </Card.Body>
@@ -101,4 +87,4 @@ function CreateSymptom() {
     );
 }
 
-export default CreateSymptom;
+export default Login;

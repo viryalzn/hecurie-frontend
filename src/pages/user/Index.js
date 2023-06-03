@@ -60,7 +60,6 @@ function SymptomIndex() {
                                     <th>NO.</th>
                                     <th>Kode Gejala</th>
                                     <th>Gejala</th>
-                                    <th>Kategori</th>
                                     <th>Belief</th>
                                     <th>Plausability</th>
                                     <th>AKSI</th>
@@ -72,7 +71,6 @@ function SymptomIndex() {
                                         <td>{ index + 1 }</td>
                                         <td>{ symptom.symptomCode }</td>
                                         <td>{ symptom.symptomName }</td>
-                                        <td>{ symptom.category }</td>
                                         <td>{ symptom.belief }</td>
                                         <td>{ symptom.plausability }</td>
                                         <td className="text-center">

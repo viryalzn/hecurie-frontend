@@ -16,7 +16,6 @@ function EditSymptom() {
     // const [illnessCode, setIllnessCode] = useState('');
     const [symptomName, setSymptomName] = useState('');
     const [belief, setBelief] = useState('');
-    const [category, setCategory] = useState('');
 
     //state validation
     const [validation, setValidation] = useState({});
@@ -48,7 +47,6 @@ function EditSymptom() {
         // setIllnessCode(data.illnessCode);
         setSymptomName(data.symptomName);
         setBelief(data.belief);
-        setCategory(data.category)
 
     };
 
@@ -60,7 +58,6 @@ function EditSymptom() {
         await axios.put(`http://localhost:9023/symptom/${symptomId}`, {
             symptomId: symptomId,
             symptomName: symptomName,
-            category: category,
             belief: belief
         })
             .then(() => {
@@ -98,12 +95,7 @@ function EditSymptom() {
                             <Form onSubmit={ updateSymptom }>
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                     <Form.Label>Nama Gejala</Form.Label>
-                                    <Form.Control type="text" value={symptomName} onChange={(e) => setSymptomName(e.target.value)} placeholder="Masukkan Nama Gejala" />
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Kategori</Form.Label>
-                                    <Form.Control type="text" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Masukkan Kategori" />
+                                    <Form.Control type="text" value={symptomName} onChange={(e) => setSymptomName(e.target.value)} placeholder="Masukkan Nama Gelaja" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
