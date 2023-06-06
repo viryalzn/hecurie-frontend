@@ -1,3 +1,8 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../index.css';
+
 //import hook useState from react
 import { useState } from 'react';
 
@@ -8,9 +13,11 @@ import { Card, Container, Row, Col , Form, Button, Alert } from 'react-bootstrap
 import axios from 'axios';
 
 //import hook history dari react router dom
-import { useHistory } from "react-router-dom";
+import {BrowserRouter, useHistory} from "react-router-dom";
 
 import configs from "../../global_config";
+
+import App from "../../App";
 
 function Login() {
 
@@ -19,6 +26,8 @@ function Login() {
     //state
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     //state validation
     const [validation, setValidation] = useState({});
@@ -37,9 +46,18 @@ function Login() {
         })
             .then(() => {
 
-                //redirect
-                history.push('/');
-
+                // setIsLoggedIn(true);
+                // setIsAdmin(true);
+                // history.push('/illness')
+                ReactDOM.render(
+                    <React.StrictMode>
+                        <BrowserRouter>
+                            <App isAdmin={true} />
+                        </BrowserRouter>
+                    </React.StrictMode>,
+                    document.getElementById('root')
+                );
+                history.push('/dashboard')
             })
             .catch((error) => {
 
@@ -69,14 +87,14 @@ function Login() {
 
                             <Form onSubmit={ storeSymptom }>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="username">
                                     <Form.Label>Username</Form.Label>
                                     <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Masukkan username atau email" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="password">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Masukkan password" />
+                                    <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Masukkan password" />
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">

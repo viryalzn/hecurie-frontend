@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import { MDBCheckbox } from "mdb-react-ui-kit";
 import configs from "../../global_config";
 
-function CreateRelation() {
+function CreateDiagnosis() {
 
     const url = configs.CONFIG.API_BASEURL;
     console.log(url)
@@ -97,18 +97,18 @@ function CreateRelation() {
 
                             <Form onSubmit={ storeRelation }>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Nama</Form.Label>
+                                <Form.Group className="mb-3" controlId="formName">
+                                    <Form.Label><b>Nama</b></Form.Label>
                                     <Form.Control type="text" value={patientName} onChange={(e) => setPatientName(e.target.value)} placeholder="Masukkan Nama" />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Umur</Form.Label>
+                                <Form.Group className="mb-3" controlId="formAge">
+                                    <Form.Label><b>Umur</b></Form.Label>
                                     <Form.Control type="number" value={patientAge} onChange={(e) => setPatientAge(e.target.value)} placeholder="Masukkan Umur" />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Jenis Kelamin</Form.Label>
+                                <Form.Group className="mb-3" controlId="formGender">
+                                    <Form.Label><b>Jenis Kelamin</b></Form.Label>
                                     <Form.Control
                                         as="select"
                                         value={patientGender} onChange={(e) => setPatientGender(e.target.value)}>
@@ -118,15 +118,15 @@ function CreateRelation() {
                                     </Form.Control>
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Gelaja</Form.Label>
+                                <Form.Group className="mb-3" controlId="formSymptom">
+                                    <Form.Label><b>Gejala</b></Form.Label>
                                     { symptoms.map(symptom => (
                                         <MDBCheckbox value={symptom.symptomCode} type="checkbox" label={symptom.symptomName} />
                                     ))}
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">
-                                    SIMPAN
+                                    Diagnosis
                                 </Button>
                             </Form>
                         </Card.Body>
@@ -137,4 +137,4 @@ function CreateRelation() {
     );
 }
 
-export default CreateRelation;
+export default CreateDiagnosis;

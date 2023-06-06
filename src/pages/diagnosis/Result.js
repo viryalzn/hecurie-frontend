@@ -17,6 +17,7 @@ function RelationIndex() {
 
     //define state
     const [diagnosis, setDiagnosis] = useState('');
+    const [result, setResult] = useState('')
 
     //get ID from parameter URL
     const { patientId } = useParams();
@@ -45,9 +46,12 @@ function RelationIndex() {
         const response = await axios.get(`${url}/getDiagnosis/${patientId}`);
         //get response data
         const data = await response.data.data;
+        const dataResult = await response.data.data.diagnosis;
+        console.log(dataResult)
 
         //assign response data to state "relations"
         setDiagnosis(data);
+        setResult(dataResult);
     }
 
     return (
@@ -56,14 +60,20 @@ function RelationIndex() {
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
-                            <div>Nama           : { diagnosis.patientName }</div>
-                            <div>Umur           : { diagnosis.patientAge }</div>
-                            <div>Jenis Kelamin  : { diagnosis.patientGender }</div>
-                            <div>Hasil Diagnosis: </div>
-                            {/*<div>{ diagnosis.diagnosis.illness.map(illness => (*/}
-                            {/*            <li> { illness.illnessName }</li>*/}
-                            {/*))}</div>*/}
-                            {/*<div>Tingkat Kepercayaan: { diagnosis.diagnosis.confidence }</div>*/}
+                            <h4>Data Pasien</h4>
+                            <div><b>Nama :</b> { diagnosis.patientName }</div>
+                            <div><b>Umur :</b> { diagnosis.patientAge }</div>
+                            <div><b>Jenis Kelamin :</b> { diagnosis.patientGender }</div>
+                            <br/>
+                            <h4>Hasil Diagnosis</h4>
+                            <div><b>Tingkat Kepercayaan :</b> { result.confidence }% </div>
+                            <div>{ result.illness.map(illness => (
+                                        <div>
+                                            <div><b>Jenis Gangguan :</b> { illness.illnessName } <br/></div>
+                                            <div><b>Penjelasan :</b> <br/> { illness.explanation }</div>
+                                            <div><b>Solusi :</b> <br/> { illness.solution }</div>
+                                        </div>
+                            ))}</div>
                         </Card.Body>
                     </Card>
                 </Col>
