@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 //import component Bootstrap React
-import { Card, Container, Row, Col , Form, Button, Alert } from 'react-bootstrap';
+import { Card, Container, Row, Col , Form, Button } from 'react-bootstrap';
 
 //import axios
 import axios from 'axios';
@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 
 import configs from "../../global_config";
+import Swal from "sweetalert2";
 
 function CreateSymptom() {
 
@@ -21,9 +22,6 @@ function CreateSymptom() {
     const [symptomName, setSymptomName] = useState('');
     const [belief, setBelief] = useState('');
     const [category, setCategory] = useState('');
-
-    //state validation
-    const [validation, setValidation] = useState({});
 
     //history
     const history = useHistory();
@@ -47,30 +45,25 @@ function CreateSymptom() {
             })
             .catch((error) => {
 
-                //assign validation on state
-                setValidation(error.response.data);
+                if (error.response.data.message === 'symptomCode is not allowed to be empty') {
+                    Swal.fire('Oops..', 'kode gejala wajib diisi', 'error');
+                } else if (error.response.data.message === 'symptomName is not allowed to be empty') {
+                    Swal.fire('Oops..', 'nama gejala wajib diisi', 'error');
+                } else if (error.response.data.message === 'category is not allowed to be empty') {
+                    Swal.fire('Oops..', 'kategori gejala wajib diisi', 'error');
+                } else if (error.response.data.message === 'belief must be a number') {
+                    Swal.fire('Oops..', 'nilai belief wajib diisi', 'error');
+                }
             })
 
     };
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
-
-                            {
-                                validation.errors &&
-                                <Alert variant="danger">
-                                    <ul class="mt-0 mb-0">
-                                        { validation.errors.map((error, index) => (
-                                            <li key={index}>{ `${error.param} : ${error.msg}` }</li>
-                                        )) }
-                                    </ul>
-                                </Alert>
-                            }
-
                             <Form onSubmit={ storeSymptom }>
 
                                 <Form.Group className="mb-3" controlId="formBasicEmail">

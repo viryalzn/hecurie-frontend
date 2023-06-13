@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../index.css';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 //import hook useState from react
 import { useState } from 'react';
 
 //import component Bootstrap React
-import { Card, Container, Row, Col , Form, Button, Alert } from 'react-bootstrap';
+import { Card, Container, Row, Col , Form, Button } from 'react-bootstrap';
 
 //import axios
 import axios from 'axios';
@@ -26,11 +28,6 @@ function Login() {
     //state
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
-
-    //state validation
-    const [validation, setValidation] = useState({});
 
     //history
     const history = useHistory();
@@ -44,15 +41,13 @@ function Login() {
             username: username,
             password: password
         })
-            .then(() => {
+            .then((data) => {
 
-                // setIsLoggedIn(true);
-                // setIsAdmin(true);
-                // history.push('/illness')
+                const isAdmin = data.data.data.isAdmin;
                 ReactDOM.render(
                     <React.StrictMode>
                         <BrowserRouter>
-                            <App isAdmin={true} />
+                            <App isAdmin={isAdmin} />
                         </BrowserRouter>
                     </React.StrictMode>,
                     document.getElementById('root')
@@ -60,31 +55,23 @@ function Login() {
                 history.push('/dashboard')
             })
             .catch((error) => {
-
-                //assign validation on state
-                setValidation(error.response.data);
+                if (error.response.data.message === 'username is not allowed to be empty') {
+                    Swal.fire('Oops..', 'username wajib diisi', 'error');
+                } else if (error.response.data.message === 'password is not allowed to be empty') {
+                    Swal.fire('Oops..', 'password wajib diisi', 'error');
+                } else if (error.response.data.message === 'Username and password didn\'t match') {
+                    Swal.fire('Oops..', 'username dan password tidak sesuai', 'error');
+                }
             })
 
     };
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
-
-                            {
-                                validation.errors &&
-                                <Alert variant="danger">
-                                    <ul class="mt-0 mb-0">
-                                        { validation.errors.map((error, index) => (
-                                            <li key={index}>{ `${error.param} : ${error.msg}` }</li>
-                                        )) }
-                                    </ul>
-                                </Alert>
-                            }
-
                             <Form onSubmit={ storeSymptom }>
 
                                 <Form.Group className="mb-3" controlId="username">

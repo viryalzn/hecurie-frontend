@@ -1,9 +1,6 @@
 //import hook useState dan useEffect from react
 import { useState, useEffect } from 'react';
 
-//import react router dom
-import { Link } from "react-router-dom";
-
 //import component Bootstrap React
 import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
 
@@ -11,6 +8,7 @@ import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 
 import configs from "../../global_config";
+import Swal from "sweetalert2";
 
 function DiagnosisIndex() {
 
@@ -28,16 +26,22 @@ function DiagnosisIndex() {
     }, []);
 
     //function "deleteRelation"
-    const deleteRelation = async (id) => {
+    const deleteDiagnosis = async (id) => {
 
-        let deleteMessage = window.confirm("Data akan dihapus secara permanen.");
-        if (deleteMessage) {
-            //sending
-            await axios.delete(`${url}/diagnosis/${id}`);
-        }
-
-        //panggil function "fetchData"
-        fectData();
+        Swal.fire({
+            title: 'Perhatian',
+            text: 'Apakah Anda yakin? Data akan dihapus secara permanen',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+            reverseButtons: true,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.delete(`${url}/diagnosis/${id}`);
+            }
+            await fectData();
+        });
     }
 
     //function "fetchData"
@@ -52,7 +56,7 @@ function DiagnosisIndex() {
     }
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
@@ -81,7 +85,7 @@ function DiagnosisIndex() {
                                             <tr>{ diagnosis.illnessName }</tr>
                                         ))}</td>
                                         <td className="text-center">
-                                            <Button onClick={() => deleteRelation(result.patientId)} variant="danger" size="sm">DELETE</Button>
+                                            <Button onClick={() => deleteDiagnosis(result.patientId)} variant="danger" size="sm">DELETE</Button>
                                         </td>
                                     </tr>
                                 )) }

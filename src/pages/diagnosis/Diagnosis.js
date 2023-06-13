@@ -14,7 +14,7 @@ import { MDBCheckbox } from "mdb-react-ui-kit";
 import configs from "../../global_config";
 import Swal from "sweetalert2";
 
-function CreateDiagnosis() {
+function Diagnosis() {
 
     const url = configs.CONFIG.API_BASEURL;
     console.log(url)
@@ -68,9 +68,7 @@ function CreateDiagnosis() {
 
                 const patientId = data.data.data.patientId;
                 //redirect
-                // history.push(`/diagnosis/result/${patientId}`);
-                history.push(`/diagnosis/diagnosis/${patientId}`);
-
+                history.push(`/diagnosis/result/${patientId}`);
 
             })
             .catch((error) => {
@@ -136,4 +134,4 @@ function CreateDiagnosis() {
     );
 }
 
-export default CreateDiagnosis;
+export default Diagnosis;

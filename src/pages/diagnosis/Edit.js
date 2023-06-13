@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 //import component Bootstrap React
-import {Card, Container, Row, Col, Form, Button, Alert, FormControl} from 'react-bootstrap';
+import {Card, Container, Row, Col, Form, Button, Alert} from 'react-bootstrap';
 
 //import axios
 import axios from 'axios';
@@ -123,7 +123,7 @@ function EditRelation() {
     };
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">

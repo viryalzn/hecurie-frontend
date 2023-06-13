@@ -11,6 +11,7 @@ import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 
 import configs from "../../global_config";
+import Swal from "sweetalert2";
 
 function IllnessIndex() {
 
@@ -30,14 +31,21 @@ function IllnessIndex() {
     //function "deleteIllness"
     const deleteIllness = async (id) => {
 
-        let deleteMessage = window.confirm("Data akan dihapus secara permanen.");
-        if (deleteMessage) {
-            //sending
-            await axios.delete(`${url}/illness/${id}`);
-        }
+        Swal.fire({
+            title: 'Perhatian',
+            text: 'Apakah Anda yakin? Data akan dihapus secara permanen',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+            reverseButtons: true,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.delete(`${url}/illness/${id}`);
+            }
+            await fectData();
+        });
 
-        //panggil function "fetchData"
-        fectData();
     }
 
     //function "fetchData"
@@ -52,7 +60,7 @@ function IllnessIndex() {
     }
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
@@ -64,6 +72,7 @@ function IllnessIndex() {
                                     <th>NO.</th>
                                     <th>Kode Penyakit</th>
                                     <th>Nama Penyakit</th>
+                                    <th>Kategori Penyakit</th>
                                     <th>Definisi</th>
                                     <th>Solusi</th>
                                     <th>AKSI</th>
@@ -75,6 +84,7 @@ function IllnessIndex() {
                                         <td>{ index + 1 }</td>
                                         <td>{ illness.illnessCode }</td>
                                         <td>{ illness.illnessName }</td>
+                                        <td>{ illness.illnessCategory }</td>
                                         <td>{ illness.explanation }</td>
                                         <td>{ illness.solution }</td>
                                         <td className="text-center">

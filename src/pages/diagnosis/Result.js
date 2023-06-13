@@ -2,22 +2,23 @@
 import { useState, useEffect } from 'react';
 
 //import react router dom
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 //import component Bootstrap React
-import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
+import { Card, Container, Row, Col } from 'react-bootstrap';
 
 //import axios
 import axios from 'axios';
 import configs from "../../global_config";
 
-function RelationIndex() {
+function DiagnosisResult() {
 
     const url = configs.CONFIG.API_BASEURL;
 
     //define state
     const [diagnosis, setDiagnosis] = useState('');
-    const [result, setResult] = useState('')
+    const [confidence, setConfidence] = useState('');
+    const [illness, setIllness] = useState([]);
 
     //get ID from parameter URL
     const { patientId } = useParams();
@@ -30,32 +31,23 @@ function RelationIndex() {
 
     }, []);
 
-    //function "deleteRelation"
-    const deleteRelation = async (id) => {
-
-        //sending
-        await axios.delete(`${url}/diagnosis/${id}`);
-
-        //panggil function "fetchData"
-        fectData();
-    }
-
     //function "fetchData"
     const fectData = async () => {
         //fetching
         const response = await axios.get(`${url}/getDiagnosis/${patientId}`);
         //get response data
         const data = await response.data.data;
-        const dataResult = await response.data.data.diagnosis;
-        console.log(dataResult)
+        const confidence = data.diagnosis.confidence;
+        const illness = data.diagnosis.illness;
 
-        //assign response data to state "relations"
+        //assign response data to state "diagnosis"
         setDiagnosis(data);
-        setResult(dataResult);
+        setConfidence(confidence);
+        setIllness(illness);
     }
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
@@ -66,8 +58,8 @@ function RelationIndex() {
                             <div><b>Jenis Kelamin :</b> { diagnosis.patientGender }</div>
                             <br/>
                             <h4>Hasil Diagnosis</h4>
-                            <div><b>Tingkat Kepercayaan :</b> { result.confidence }% </div>
-                            <div>{ result.illness.map(illness => (
+                            <div><b>Tingkat Kepercayaan :</b> { confidence }% </div>
+                            <div>{ illness.map(illness => (
                                         <div>
                                             <div><b>Jenis Gangguan :</b> { illness.illnessName } <br/></div>
                                             <div><b>Penjelasan :</b> <br/> { illness.explanation }</div>
@@ -82,4 +74,4 @@ function RelationIndex() {
     );
 }
 
-export default RelationIndex;
+export default DiagnosisResult;

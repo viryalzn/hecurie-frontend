@@ -1,6 +1,6 @@
 //import component Bootstrap React
 import {Card, Container, Row, Col, Button, CardColumns} from 'react-bootstrap'
-import {Link, useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import buttonPenyakit from '../image/button-penyakit.png'
 import buttonGejala from '../image/button-gejala.png'
@@ -8,8 +8,6 @@ import buttonRelasi from '../image/button-relasi.png'
 import buttonRiwayat from '../image/button-riwayat.png'
 
 function Dashboard() {
-
-    const history = useHistory();
 
     const ImageButton = ({ imageSrc, onClick }) => {
         const buttonStyle = {
@@ -24,7 +22,7 @@ function Dashboard() {
     };
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">

@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 //import component Bootstrap React
-import {Card, Container, Row, Col, Form, Button, Alert, FormControl} from 'react-bootstrap';
+import {Card, Container, Row, Col, Form, Button} from 'react-bootstrap';
 
 //import axios
 import axios from 'axios';
@@ -12,6 +12,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { MDBCheckbox } from "mdb-react-ui-kit";
 
 import configs from "../../global_config";
+import Swal from "sweetalert2";
 
 function EditRelation() {
 
@@ -24,9 +25,6 @@ function EditRelation() {
     //state
     const [illnessCode, setIllnessCode] = useState('');
     const [symptomCode, setSymptomCode] = useState([]);
-
-    //state validation
-    const [validation, setValidation] = useState({});
 
     //history
     const history = useHistory();
@@ -120,30 +118,21 @@ function EditRelation() {
             })
             .catch((error) => {
 
-                //assign validation on state
-                setValidation(error.response.data);
+                if (error.response.data.message === 'illnessCode is not allowed to be empty') {
+                    Swal.fire('Oops..', 'penyakit wajib diisi', 'error');
+                } else if (error.response.data.message === 'symptomCode must contain at least 1 items') {
+                    Swal.fire('Oops..', 'gejala wajib diisi', 'error');
+                }
             })
 
     };
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
-
-                            {
-                                validation.errors &&
-                                <Alert variant="danger">
-                                    <ul class="mt-0 mb-0">
-                                        { validation.errors.map((error, index) => (
-                                            <li key={index}>{ `${error.param} : ${error.msg}` }</li>
-                                        )) }
-                                    </ul>
-                                </Alert>
-                            }
-
                             <Form onSubmit={ updateRelation }>
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                     <Form.Label>Pilih Penyakit</Form.Label>

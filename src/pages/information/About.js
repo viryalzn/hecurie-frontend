@@ -1,10 +1,9 @@
 //import component Bootstrap React
-import { Card, Container, Row, Col , Button } from 'react-bootstrap'
-import {Link} from "react-router-dom";
+import { Card, Container, Row, Col } from 'react-bootstrap'
 
 function About() {
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">

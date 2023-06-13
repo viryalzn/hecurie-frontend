@@ -1,11 +1,8 @@
 //import hook useState dan useEffect from react
 import { useState, useEffect } from 'react';
 
-//import react router dom
-import { Link } from "react-router-dom";
-
 //import component Bootstrap React
-import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
+import { Card, Container, Row, Col, Table } from 'react-bootstrap';
 
 //import axios
 import axios from 'axios';
@@ -39,7 +36,7 @@ function InformationIllness() {
     }
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">

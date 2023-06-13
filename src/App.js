@@ -49,6 +49,9 @@ import CreateDiagnosis from './pages/diagnosis/Create'
 //import component Post Create
 import DiagnosisResult from './pages/diagnosis/Result'
 
+//import component Post Diagnosis
+import Diagnosis from './pages/diagnosis/Diagnosis'
+
 //import component Post Edit
 import DiagnosisEdit from './pages/diagnosis/Edit'
 
@@ -81,7 +84,9 @@ const App = ( { isAdmin } ) => {
     console.log(isAdmin)
     return (
         <div>
-            <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: '#FFCEFE' }} variant="light">
+            <Navbar collapseOnSelect expand="lg"
+                    style={{ backgroundColor: '#FFCEFE', position:"fixed", top: 0, width: '100%', zIndex: 9999 }}
+                    variant="light">
                 <Container>
                     <img src={logo} width="50" height="50" alt="..."/>
                     <Navbar.Brand to="/">H`ECURIE</Navbar.Brand>
@@ -142,6 +147,7 @@ const App = ( { isAdmin } ) => {
                 <Route exact path="/diagnosis" component={CreateDiagnosis} />
                 <Route exact path="/diagnosis/index" component={DiagnosisIndex} />
                 <Route exact path="/diagnosis/result/:patientId" component={DiagnosisResult} />
+                <Route exact path="/diagnosis/diagnosis/:patientId" component={DiagnosisResult} />
                 <Route exact path="/diagnosis/edit/:patientId" component={DiagnosisEdit} />
                 <Route exact path="/login" component={Login} />
             </Switch>

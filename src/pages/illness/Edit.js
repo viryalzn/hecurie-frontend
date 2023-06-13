@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 //import component Bootstrap React
-import { Card, Container, Row, Col , Form, Button, Alert } from 'react-bootstrap';
+import { Card, Container, Row, Col , Form, Button } from 'react-bootstrap';
 
 //import axios
 import axios from 'axios';
@@ -11,19 +11,17 @@ import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
 
 import configs from "../../global_config";
+import Swal from "sweetalert2";
 
 function EditIllness() {
 
     const url = configs.CONFIG.API_BASEURL;
 
     //state
-    // const [illnessCode, setIllnessCode] = useState('');
     const [illnessName, setIllnessName] = useState('');
+    const [illnessCategory, setIllnessCategory] = useState('');
     const [explanation, setExplanation] = useState('');
     const [solution, setSolution] = useState('');
-
-    //state validation
-    const [validation, setValidation] = useState({});
 
     //history
     const history = useHistory();
@@ -51,7 +49,6 @@ function EditIllness() {
         const data = await response.data.data
 
         //assign data to state
-        // setIllnessCode(data.illnessCode);
         setIllnessName(data.illnessName);
         setExplanation(data.explanation);
         setSolution(data.solution);
@@ -66,6 +63,7 @@ function EditIllness() {
         await axios.put(`${url}/illness/${illnessId}`, {
             illnessId: illnessId,
             illnessName: illnessName,
+            illnessCategory: illnessCategory,
             explanation: explanation,
             solution: solution
         })
@@ -77,42 +75,42 @@ function EditIllness() {
             })
             .catch((error) => {
 
-                //assign validation on state
-                setValidation(error.response.data);
+                if (error.response.data.message === 'illnessName is not allowed to be empty') {
+                    Swal.fire('Oops..', 'nama penyakit wajib diisi', 'error');
+                } else if (error.response.data.message === 'illnessCategory is not allowed to be empty') {
+                    Swal.fire('Oops..', 'kategori penyakit wajib diisi', 'error');
+                } else if (error.response.data.message === 'explanation is not allowed to be empty') {
+                    Swal.fire('Oops..', 'definisi penyakit wajib diisi', 'error');
+                } else if (error.response.data.message === 'solution is not allowed to be empty') {
+                    Swal.fire('Oops..', 'solusi penyakit wajib diisi', 'error');
+                }
             })
 
     };
 
     return (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ paddingTop: '70px'}}>
             <Row>
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
-
-                            {
-                                validation.errors &&
-                                <Alert variant="danger">
-                                    <ul class="mt-0 mb-0">
-                                        { validation.errors.map((error, index) => (
-                                            <li key={index}>{ `${error.param} : ${error.msg}` }</li>
-                                        )) }
-                                    </ul>
-                                </Alert>
-                            }
-
                             <Form onSubmit={ updateIllness }>
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="formIllnessNameEdit">
                                     <Form.Label>Nama Penyakit</Form.Label>
                                     <Form.Control type="text" value={illnessName} onChange={(e) => setIllnessName(e.target.value)} placeholder="Masukkan Nama Penyakit" />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Group className="mb-3" controlId="formIllnessCategoryEdit">
+                                    <Form.Label>Kategori Penyakit</Form.Label>
+                                    <Form.Control type="text" value={illnessCategory} onChange={(e) => setIllnessCategory(e.target.value)} placeholder="Masukkan Kategori Penyakit" />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="formExplanationEdit">
                                     <Form.Label>Definisi</Form.Label>
                                     <Form.Control as="textarea" rows={3} value={explanation} onChange={(e) => setExplanation(e.target.value)} placeholder="Masukkan Definisi" />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Group className="mb-3" controlId="formSolutionEdit">
                                     <Form.Label>Solusi</Form.Label>
                                     <Form.Control as="textarea" rows={3} value={solution} onChange={(e) => setSolution(e.target.value)} placeholder="Masukkan Solusi" />
                                 </Form.Group>
