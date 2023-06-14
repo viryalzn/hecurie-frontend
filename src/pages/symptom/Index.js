@@ -12,6 +12,8 @@ import axios from 'axios';
 
 import configs from "../../global_config";
 import Swal from "sweetalert2";
+import buttonEdit from '../../image/icon-edit.png'
+import buttonDelete from '../../image/icon-delete.png'
 
 function SymptomIndex() {
 
@@ -75,7 +77,7 @@ function SymptomIndex() {
                                     <th>Kategori</th>
                                     <th>Belief</th>
                                     <th>Plausability</th>
-                                    <th>AKSI</th>
+                                    <th colSpan={2}>AKSI</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -88,8 +90,14 @@ function SymptomIndex() {
                                         <td>{ symptom.belief }</td>
                                         <td>{ symptom.plausability }</td>
                                         <td className="text-center">
-                                            <Button as={Link} to={`/symptom/edit/${symptom.symptomId}`} variant="primary" size="sm" className="me-2">EDIT</Button>
-                                            <Button onClick={() => deleteSymptom(symptom.symptomId)} variant="danger" size="sm">DELETE</Button>
+                                            <Button as={Link} to={`/symptom/edit/${symptom.symptomId}`} variant="primary" size="sm" className="me-2">
+                                                <img src={buttonEdit} alt="Button Edit" />
+                                            </Button>
+                                        </td>
+                                        <td className="text-center">
+                                            <Button onClick={() => deleteSymptom(symptom.symptomId)} variant="danger" size="sm">
+                                                <img src={buttonDelete} alt="Button Delete" />
+                                            </Button>
                                         </td>
                                     </tr>
                                 )) }

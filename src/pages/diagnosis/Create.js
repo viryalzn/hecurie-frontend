@@ -63,13 +63,14 @@ function CreateDiagnosis() {
             patientAge: patientAge,
             patientGender: patientGender,
             symptomCode: arr
+            // depresifSymptomCode: arr
         })
             .then((data) => {
 
                 const patientId = data.data.data.patientId;
                 //redirect
-                // history.push(`/diagnosis/result/${patientId}`);
-                history.push(`/diagnosis/diagnosis/${patientId}`);
+                history.push(`/diagnosis/result/${patientId}`);
+                // history.push(`/diagnosis/diagnosis/${patientId}`);
 
 
             })
@@ -124,8 +125,18 @@ function CreateDiagnosis() {
                                     ))}
                                 </Form.Group>
 
+                                {/*<Form.Group className="mb-3" controlId="formSymptom">*/}
+                                {/*    <Form.Label><b>Gejala (boleh dikosongkan)</b></Form.Label>*/}
+                                {/*    { symptoms.map(symptom => {*/}
+                                {/*        if (symptom.category === 'C' || symptom.category === 'D') {*/}
+                                {/*            return <MDBCheckbox value={symptom.symptomCode} type="checkbox" label={symptom.symptomName} />*/}
+                                {/*        }*/}
+                                {/*    })}*/}
+                                {/*</Form.Group>*/}
+
                                 <Button variant="primary" type="submit">
                                     Diagnosis
+                                    {/*Selanjutnya*/}
                                 </Button>
                             </Form>
                         </Card.Body>

@@ -9,6 +9,7 @@ import axios from 'axios';
 
 import configs from "../../global_config";
 import Swal from "sweetalert2";
+import buttonDelete from '../../image/icon-delete.png'
 
 function DiagnosisIndex() {
 
@@ -85,7 +86,9 @@ function DiagnosisIndex() {
                                             <tr>{ diagnosis.illnessName }</tr>
                                         ))}</td>
                                         <td className="text-center">
-                                            <Button onClick={() => deleteDiagnosis(result.patientId)} variant="danger" size="sm">DELETE</Button>
+                                            <Button onClick={() => deleteDiagnosis(result.patientId)} variant="danger" size="sm">
+                                                <img src={buttonDelete} alt="Button Delete" />
+                                            </Button>
                                         </td>
                                     </tr>
                                 )) }

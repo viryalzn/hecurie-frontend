@@ -12,6 +12,8 @@ import axios from 'axios';
 
 import configs from "../../global_config";
 import Swal from "sweetalert2";
+import buttonEdit from '../../image/icon-edit.png'
+import buttonDelete from '../../image/icon-delete.png'
 
 function RelationIndex() {
 
@@ -71,7 +73,7 @@ function RelationIndex() {
                                     <th>NO.</th>
                                     <th>Nama Penyakit</th>
                                     <th>Nama Gejala</th>
-                                    <th>AKSI</th>
+                                    <th colSpan={2}>AKSI</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -83,8 +85,14 @@ function RelationIndex() {
                                             <tr>{ "- " + symptom.symptomName }</tr>
                                         ))}</td>
                                         <td className="text-center">
-                                            <Button as={Link} to={`/relation/edit/${relation.relationId}`} variant="primary" size="sm" className="me-2">EDIT</Button>
-                                            <Button onClick={() => deleteRelation(relation.relationId)} variant="danger" size="sm">DELETE</Button>
+                                            <Button as={Link} to={`/relation/edit/${relation.relationId}`} variant="primary" size="sm" className="me-2">
+                                                <img src={buttonEdit} alt="Button Edit" />
+                                            </Button>
+                                        </td>
+                                        <td className="text-center">
+                                            <Button onClick={() => deleteRelation(relation.relationId)} variant="danger" size="sm">
+                                                <img src={buttonDelete} alt="Button Delete" />
+                                            </Button>
                                         </td>
                                     </tr>
                                 )) }

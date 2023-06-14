@@ -8,7 +8,7 @@ import {Card, Container, Row, Col, Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 
 //import hook history dari react router dom
-import { useHistory } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 
 import { MDBCheckbox } from "mdb-react-ui-kit";
 import configs from "../../global_config";
@@ -21,11 +21,10 @@ function Diagnosis() {
 
     //define state
     const [symptoms, setSymptoms] = useState([]);
+    let [category, setCategory] = useState([]);
 
-    //state
-    const [patientName, setPatientName] = useState('');
-    const [patientAge, setPatientAge] = useState('');
-    const [patientGender, setPatientGender] = useState('');
+    //get ID from parameter URL
+    const { patientId } = useParams();
 
     //history
     const history = useHistory();
@@ -38,17 +37,37 @@ function Diagnosis() {
     }, []);
 
     const fectData = async () => {
+        let categoryC = 0;
+        let categoryD = 0;
+
         //fetching
         const responseSymptom = await axios.get(`${url}/getSymptom`);
+        const responsePatient = await axios.get(`${url}/getDiagnosis/${patientId}`);
         //get response data
         const dataSymptom = await responseSymptom.data.data;
+        const patientSymptoms = await responsePatient.data.data.patientDepresifSymptom;
 
         //assign response data to state "relations"
         setSymptoms(dataSymptom);
+
+        await Promise.all(patientSymptoms.map(async symptom => {
+            if (symptom === 'G12' || symptom === 'G13' || symptom === 'G14') {
+                categoryC++;
+            } else if (symptom === 'G15' || symptom === 'G16' || symptom === 'G17' ||
+                symptom === 'G18' || symptom === 'G19' || symptom === 'G20' || symptom === 'G21') {
+                categoryD++;
+            }
+        }));
+
+        if (categoryC < 2 && categoryD < 2) {
+            setCategory(['A', 'B', 'G', 'I']);
+        } else {
+            setCategory(['A', 'E', 'F', 'H']);
+        }
     }
 
     //method "storeRelation"
-    const storeRelation = async (e) => {
+    const storeDiagnosis = async (e) => {
         let arr = [];
         let checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
         for (let i = 0; i < checkboxes.length; i++) {
@@ -58,10 +77,8 @@ function Diagnosis() {
         e.preventDefault();
 
         //send data to server
-        await axios.post(`${url}/diagnosis`, {
-            patientName: patientName,
-            patientAge: patientAge,
-            patientGender: patientGender,
+        await axios.put(`${url}/diagnosis/${patientId}`, {
+            patientId: patientId,
             symptomCode: arr
         })
             .then((data) => {
@@ -92,34 +109,23 @@ function Diagnosis() {
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
-                            <Form onSubmit={ storeRelation }>
-
-                                <Form.Group className="mb-3" controlId="formName">
-                                    <Form.Label><b>Nama</b></Form.Label>
-                                    <Form.Control type="text" value={patientName} onChange={(e) => setPatientName(e.target.value)} placeholder="Masukkan Nama" />
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" controlId="formAge">
-                                    <Form.Label><b>Umur</b></Form.Label>
-                                    <Form.Control type="number" value={patientAge} onChange={(e) => setPatientAge(e.target.value)} placeholder="Masukkan Umur" />
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" controlId="formGender">
-                                    <Form.Label><b>Jenis Kelamin</b></Form.Label>
-                                    <Form.Control
-                                        as="select"
-                                        value={patientGender} onChange={(e) => setPatientGender(e.target.value)}>
-                                        <option value="">Pilih Jenis Kelamin</option>
-                                        <option value="Laki-Laki">Laki-Laki</option>
-                                        <option value="Perempuan">Perempuan</option>
-                                    </Form.Control>
-                                </Form.Group>
+                            <Form onSubmit={ storeDiagnosis }>
+                                {/*<Form.Group className="mb-3" controlId="formSymptom">*/}
+                                {/*    <Form.Label><b>Gejala</b></Form.Label>*/}
+                                {/*    { symptoms.map(symptom => (*/}
+                                {/*        <MDBCheckbox value={symptom.symptomCode} type="checkbox" label={symptom.symptomName} />*/}
+                                {/*    ))}*/}
+                                {/*</Form.Group>*/}
 
                                 <Form.Group className="mb-3" controlId="formSymptom">
                                     <Form.Label><b>Gejala</b></Form.Label>
-                                    { symptoms.map(symptom => (
-                                        <MDBCheckbox value={symptom.symptomCode} type="checkbox" label={symptom.symptomName} />
-                                    ))}
+                                    { symptoms.map(symptom => {
+                                        for (var c in category) {
+                                            if (symptom.category === category[c]) {
+                                                return <MDBCheckbox value={symptom.symptomCode} type="checkbox" label={symptom.symptomName} />
+                                            }
+                                        }
+                                    })}
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">

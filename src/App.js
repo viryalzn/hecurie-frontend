@@ -147,7 +147,7 @@ const App = ( { isAdmin } ) => {
                 <Route exact path="/diagnosis" component={CreateDiagnosis} />
                 <Route exact path="/diagnosis/index" component={DiagnosisIndex} />
                 <Route exact path="/diagnosis/result/:patientId" component={DiagnosisResult} />
-                <Route exact path="/diagnosis/diagnosis/:patientId" component={DiagnosisResult} />
+                <Route exact path="/diagnosis/diagnosis/:patientId" component={Diagnosis} />
                 <Route exact path="/diagnosis/edit/:patientId" component={DiagnosisEdit} />
                 <Route exact path="/login" component={Login} />
             </Switch>
