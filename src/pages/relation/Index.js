@@ -21,6 +21,20 @@ function RelationIndex() {
 
     //define state
     const [relations, setRelations] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Logic to calculate the total number of pages
+    const totalPages = Math.ceil(relations.length / 5);
+
+    // Logic to slice the data based on the current page
+    const indexOfLastItem = currentPage * 5;
+    const indexOfFirstItem = indexOfLastItem - 5;
+    const currentItems = relations.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Function to handle page navigation
+    const goToPage = (page) => {
+        setCurrentPage(page);
+    };
 
     //useEffect hook
     useEffect(() => {
@@ -77,9 +91,9 @@ function RelationIndex() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                { relations.map((relation, index) => (
+                                { currentItems.map((relation, index) => (
                                     <tr key={ relation.relationId }>
-                                        <td>{ index + 1 }</td>
+                                        <td>{ indexOfFirstItem + index + 1 }</td>
                                         <td>{ relation.illness.illnessName }</td>
                                         <td>{ relation.symptoms.map(symptom => (
                                             <tr>{ "- " + symptom.symptomName }</tr>
@@ -98,6 +112,18 @@ function RelationIndex() {
                                 )) }
                                 </tbody>
                             </Table>
+                            <br/><br/>
+                            <div>
+                                {Array.from({ length: totalPages }, (_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => goToPage(index + 1)}
+                                        disabled={currentPage === index + 1}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
+                            </div>
                         </Card.Body>
                     </Card>
                 </Col>

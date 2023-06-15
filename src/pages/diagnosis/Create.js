@@ -17,7 +17,6 @@ import Swal from "sweetalert2";
 function CreateDiagnosis() {
 
     const url = configs.CONFIG.API_BASEURL;
-    console.log(url)
 
     //define state
     const [symptoms, setSymptoms] = useState([]);
@@ -43,12 +42,12 @@ function CreateDiagnosis() {
         //get response data
         const dataSymptom = await responseSymptom.data.data;
 
-        //assign response data to state "relations"
+        //assign response data to state "symptoms"
         setSymptoms(dataSymptom);
     }
 
     //method "storeRelation"
-    const storeRelation = async (e) => {
+    const storeDiagnosis = async (e) => {
         let arr = [];
         let checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
         for (let i = 0; i < checkboxes.length; i++) {
@@ -63,16 +62,12 @@ function CreateDiagnosis() {
             patientAge: patientAge,
             patientGender: patientGender,
             symptomCode: arr
-            // depresifSymptomCode: arr
         })
             .then((data) => {
 
                 const patientId = data.data.data.patientId;
                 //redirect
                 history.push(`/diagnosis/result/${patientId}`);
-                // history.push(`/diagnosis/diagnosis/${patientId}`);
-
-
             })
             .catch((error) => {
 
@@ -95,16 +90,18 @@ function CreateDiagnosis() {
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
-                            <Form onSubmit={ storeRelation }>
+                            <Form onSubmit={ storeDiagnosis }>
 
                                 <Form.Group className="mb-3" controlId="formName">
                                     <Form.Label><b>Nama</b></Form.Label>
-                                    <Form.Control type="text" value={patientName} onChange={(e) => setPatientName(e.target.value)} placeholder="Masukkan Nama" />
+                                    <Form.Control type="text" value={patientName} onChange={(e) =>
+                                        setPatientName(e.target.value)} placeholder="Masukkan Nama" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formAge">
                                     <Form.Label><b>Umur</b></Form.Label>
-                                    <Form.Control type="number" value={patientAge} onChange={(e) => setPatientAge(e.target.value)} placeholder="Masukkan Umur" />
+                                    <Form.Control type="number" value={patientAge} onChange={(e) =>
+                                        setPatientAge(e.target.value)} placeholder="Masukkan Umur" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formGender">
@@ -124,15 +121,6 @@ function CreateDiagnosis() {
                                         <MDBCheckbox value={symptom.symptomCode} type="checkbox" label={symptom.symptomName} />
                                     ))}
                                 </Form.Group>
-
-                                {/*<Form.Group className="mb-3" controlId="formSymptom">*/}
-                                {/*    <Form.Label><b>Gejala (boleh dikosongkan)</b></Form.Label>*/}
-                                {/*    { symptoms.map(symptom => {*/}
-                                {/*        if (symptom.category === 'C' || symptom.category === 'D') {*/}
-                                {/*            return <MDBCheckbox value={symptom.symptomCode} type="checkbox" label={symptom.symptomName} />*/}
-                                {/*        }*/}
-                                {/*    })}*/}
-                                {/*</Form.Group>*/}
 
                                 <Button variant="primary" type="submit">
                                     Diagnosis

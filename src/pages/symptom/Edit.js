@@ -91,19 +91,22 @@ function EditSymptom() {
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
                             <Form onSubmit={ updateSymptom }>
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="formSymptomNameEdit">
                                     <Form.Label>Nama Gejala</Form.Label>
-                                    <Form.Control type="text" value={symptomName} onChange={(e) => setSymptomName(e.target.value)} placeholder="Masukkan Nama Gejala" />
+                                    <Form.Control type="text" value={symptomName} onChange={(e) =>
+                                        setSymptomName(e.target.value)} placeholder="Masukkan Nama Gejala" />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="formSymptomCategoryEdit">
                                     <Form.Label>Kategori</Form.Label>
-                                    <Form.Control type="text" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Masukkan Kategori" />
+                                    <Form.Control type="text" value={category} onChange={(e) =>
+                                        setCategory(e.target.value)} placeholder="Masukkan Kategori" />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="formSymptomBeliefEdit">
                                     <Form.Label>Nilai Belief</Form.Label>
-                                    <Form.Control type="text" value={belief} onChange={(e) => setBelief(e.target.value)} placeholder="Masukkan Nilai Belief" />
+                                    <Form.Control type="text" value={belief} onChange={(e) =>
+                                        setBelief(e.target.value)} placeholder="Masukkan Nilai Belief" />
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">

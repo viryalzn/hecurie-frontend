@@ -92,7 +92,7 @@ function CreateRelation() {
                         <Card.Body>
                             <Form onSubmit={ storeRelation }>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="formRelationIllness">
                                     <Form.Label>Pilih Penyakit</Form.Label>
                                     <Form.Control
                                         as="select"
@@ -103,7 +103,7 @@ function CreateRelation() {
                                     </Form.Control>
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="formRelationSymptom">
                                     <Form.Label>Gejala</Form.Label>
                                     { symptoms.map(symptom => (
                                         <MDBCheckbox value={symptom.symptomCode} type="checkbox" label={symptom.symptomName} />

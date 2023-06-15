@@ -63,7 +63,9 @@ function DiagnosisResult() {
                                         <div>
                                             <div><b>Jenis Gangguan :</b> { illness.illnessName } <br/></div>
                                             <div><b>Penjelasan :</b> <br/> { illness.explanation }</div>
-                                            <div><b>Solusi :</b> <br/> { illness.solution }</div>
+                                            <div><b>Solusi :</b> <br/> { illness.solution.split('\n').map( solution => (
+                                                <di>{ solution } <br/> </di>
+                                            )) }</div>
                                         </div>
                             ))}</div>
                         </Card.Body>

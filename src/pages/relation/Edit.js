@@ -82,19 +82,6 @@ function EditRelation() {
         setSymptomCode(arr);
     };
 
-    // const handleChange = event => {
-    //
-    //     var updatedList = [...symptomCode];
-    //     if (event.target.checked) {
-    //         console.log('yes')
-    //         updatedList = [...symptomCode, event.target.value];
-    //     } else {
-    //         console.log('no')
-    //         updatedList.splice(symptomCode.indexOf(event.target.value), 1);
-    //     }
-    //     setSymptomCode(updatedList);
-    // };
-
     //function "updateSymptom"
     const updateRelation = async (e) => {
         let arr = [];
@@ -134,7 +121,7 @@ function EditRelation() {
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
                             <Form onSubmit={ updateRelation }>
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="formRelationIllnessEdit">
                                     <Form.Label>Pilih Penyakit</Form.Label>
                                     <Form.Control
                                         as="select"
@@ -145,7 +132,7 @@ function EditRelation() {
                                     </Form.Control>
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="formRelationSymptomEdit">
                                     <Form.Label>Nama Gejala</Form.Label>
                                     {symptoms.map(symptom => (
                                         <MDBCheckbox key={symptom['relationId']} defaultChecked={symptomCode.includes(symptom.symptomCode)}

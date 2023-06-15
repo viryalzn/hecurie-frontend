@@ -72,27 +72,32 @@ function CreateIllness() {
 
                                 <Form.Group className="mb-3" controlId="formIllnessCode">
                                     <Form.Label>Kode Penyakit</Form.Label>
-                                    <Form.Control type="text" value={illnessCode} onChange={(e) => setIllnessCode(e.target.value)} placeholder="Masukkan Kode Penyakit" />
+                                    <Form.Control type="text" value={illnessCode} onChange={(e) =>
+                                        setIllnessCode(e.target.value)} placeholder="Masukkan Kode Penyakit" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formIllnessName">
                                     <Form.Label>Nama Penyakit</Form.Label>
-                                    <Form.Control type="text" value={illnessName} onChange={(e) => setIllnessName(e.target.value)} placeholder="Masukkan Nama Penyakit" />
+                                    <Form.Control type="text" value={illnessName} onChange={(e) =>
+                                        setIllnessName(e.target.value)} placeholder="Masukkan Nama Penyakit" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formIllnessCategory">
                                     <Form.Label>Kategori Penyakit</Form.Label>
-                                    <Form.Control type="text" value={illnessCategory} onChange={(e) => setIllnessCategory(e.target.value)} placeholder="Masukkan Kategori Penyakit" />
+                                    <Form.Control type="text" value={illnessCategory} onChange={(e) =>
+                                        setIllnessCategory(e.target.value)} placeholder="Masukkan Kategori Penyakit" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formExplanation">
                                     <Form.Label>Definisi</Form.Label>
-                                    <Form.Control as="textarea" rows={3} value={explanation} onChange={(e) => setExplanation(e.target.value)} placeholder="Masukkan Definisi" />
+                                    <Form.Control as="textarea" rows={3} value={explanation} onChange={(e) =>
+                                        setExplanation(e.target.value)} placeholder="Masukkan Definisi" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formSolution">
                                     <Form.Label>Solusi</Form.Label>
-                                    <Form.Control as="textarea" rows={3} value={solution} onChange={(e) => setSolution(e.target.value)} placeholder="Masukkan Solusi" />
+                                    <Form.Control as="textarea" rows={3} value={solution} onChange={(e) =>
+                                        setSolution(e.target.value)} placeholder="Masukkan Solusi" />
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">

@@ -21,6 +21,20 @@ function IllnessIndex() {
 
     //define state
     const [illnesses, setIllnesses] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Logic to calculate the total number of pages
+    const totalPages = Math.ceil(illnesses.length / 5);
+
+    // Logic to slice the data based on the current page
+    const indexOfLastItem = currentPage * 5;
+    const indexOfFirstItem = indexOfLastItem - 5;
+    const currentItems = illnesses.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Function to handle page navigation
+    const goToPage = (page) => {
+        setCurrentPage(page);
+    };
 
     //useEffect hook
     useEffect(() => {
@@ -75,20 +89,22 @@ function IllnessIndex() {
                                     <th>Kode Penyakit</th>
                                     <th>Nama Penyakit</th>
                                     <th>Kategori Penyakit</th>
-                                    <th>Definisi</th>
+                                    <th style={{width: '300px'}}>Definisi</th>
                                     <th>Solusi</th>
                                     <th colSpan={2}>AKSI</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                { illnesses.map((illness, index) => (
+                                { currentItems.map((illness, index) => (
                                     <tr key={ illness.illnessId }>
-                                        <td>{ index + 1 }</td>
+                                        <td>{ indexOfFirstItem + index + 1 }</td>
                                         <td>{ illness.illnessCode }</td>
                                         <td>{ illness.illnessName }</td>
                                         <td>{ illness.illnessCategory }</td>
                                         <td>{ illness.explanation }</td>
-                                        <td>{ illness.solution }</td>
+                                        <td>{ illness.solution.split('\n').map( solution => (
+                                            <tr>{ solution }</tr>
+                                        )) }</td>
                                         <td className="text-center">
                                             <Button as={Link} to={`/illness/edit/${illness.illnessId}`} variant="primary" size="sm" className="me-2">
                                                 <img src={buttonEdit} alt="Button Edit" />
@@ -103,6 +119,18 @@ function IllnessIndex() {
                                 )) }
                                 </tbody>
                             </Table>
+                            <br/><br/>
+                            <div>
+                                {Array.from({ length: totalPages }, (_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => goToPage(index + 1)}
+                                        disabled={currentPage === index + 1}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
+                            </div>
                         </Card.Body>
                     </Card>
                 </Col>

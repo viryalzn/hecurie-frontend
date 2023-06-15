@@ -33,7 +33,7 @@ function Login() {
     const history = useHistory();
 
     //method "storeSymptom"
-    const storeSymptom = async (e) => {
+    const login = async (e) => {
         e.preventDefault();
 
         //send data to server
@@ -72,16 +72,18 @@ function Login() {
                 <Col md="{12}">
                     <Card className="border-0 rounded shadow-sm">
                         <Card.Body>
-                            <Form onSubmit={ storeSymptom }>
+                            <Form onSubmit={ login }>
 
                                 <Form.Group className="mb-3" controlId="username">
                                     <Form.Label>Username</Form.Label>
-                                    <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Masukkan username atau email" />
+                                    <Form.Control type="text" value={username} onChange={(e) =>
+                                        setUsername(e.target.value)} placeholder="Masukkan username atau email" />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="password">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Masukkan password" />
+                                    <Form.Control type="password" value={password} onChange={(e) =>
+                                        setPassword(e.target.value)} placeholder="Masukkan password" />
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit">

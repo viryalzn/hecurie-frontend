@@ -21,6 +21,20 @@ function SymptomIndex() {
 
     //define state
     const [symptoms, setSymptoms] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Logic to calculate the total number of pages
+    const totalPages = Math.ceil(symptoms.length / 5);
+
+    // Logic to slice the data based on the current page
+    const indexOfLastItem = currentPage * 5;
+    const indexOfFirstItem = indexOfLastItem - 5;
+    const currentItems = symptoms.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Function to handle page navigation
+    const goToPage = (page) => {
+        setCurrentPage(page);
+    };
 
     //useEffect hook
     useEffect(() => {
@@ -81,9 +95,9 @@ function SymptomIndex() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                { symptoms.map((symptom, index) => (
+                                { currentItems.map((symptom, index) => (
                                     <tr key={ symptom.symptomId }>
-                                        <td>{ index + 1 }</td>
+                                        <td>{ indexOfFirstItem + index + 1 }</td>
                                         <td>{ symptom.symptomCode }</td>
                                         <td>{ symptom.symptomName }</td>
                                         <td>{ symptom.category }</td>
@@ -103,6 +117,18 @@ function SymptomIndex() {
                                 )) }
                                 </tbody>
                             </Table>
+                            <br/><br/>
+                            <div>
+                                {Array.from({ length: totalPages }, (_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => goToPage(index + 1)}
+                                        disabled={currentPage === index + 1}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
+                            </div>
                         </Card.Body>
                     </Card>
                 </Col>

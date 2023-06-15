@@ -15,6 +15,20 @@ function InformationIllness() {
 
     //define state
     const [illnesses, setIllnesses] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Logic to calculate the total number of pages
+    const totalPages = Math.ceil(illnesses.length / 5);
+
+    // Logic to slice the data based on the current page
+    const indexOfLastItem = currentPage * 5;
+    const indexOfFirstItem = indexOfLastItem - 5;
+    const currentItems = illnesses.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Function to handle page navigation
+    const goToPage = (page) => {
+        setCurrentPage(page);
+    };
 
     //useEffect hook
     useEffect(() => {
@@ -45,24 +59,36 @@ function InformationIllness() {
                                 <thead>
                                 <tr>
                                     <th>NO.</th>
-                                    <th>Kode Penyakit</th>
                                     <th>Nama Penyakit</th>
-                                    <th>Definisi</th>
+                                    <th style={{width: "300px"}}>Definisi</th>
                                     <th>Solusi</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                { illnesses.map((illness, index) => (
+                                { currentItems.map((illness, index) => (
                                     <tr key={ illness.illnessId }>
-                                        <td>{ index + 1 }</td>
-                                        <td>{ illness.illnessCode }</td>
+                                        <td>{ indexOfFirstItem + index + 1 }</td>
                                         <td>{ illness.illnessName }</td>
                                         <td>{ illness.explanation }</td>
-                                        <td>{ illness.solution }</td>
+                                        <td>{ illness.solution.split('\n').map( solution => (
+                                            <tr>{ solution }</tr>
+                                        )) }</td>
                                     </tr>
                                 )) }
                                 </tbody>
                             </Table>
+                            <br/><br/>
+                            <div>
+                                {Array.from({ length: totalPages }, (_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => goToPage(index + 1)}
+                                        disabled={currentPage === index + 1}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
+                            </div>
                         </Card.Body>
                     </Card>
                 </Col>
