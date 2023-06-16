@@ -41,13 +41,12 @@ function Login() {
             username: username,
             password: password
         })
-            .then((data) => {
+            .then(() => {
 
-                const isAdmin = data.data.data.isAdmin;
                 ReactDOM.render(
                     <React.StrictMode>
                         <BrowserRouter>
-                            <App isAdmin={isAdmin} />
+                            <App isAdmin={true} />
                         </BrowserRouter>
                     </React.StrictMode>,
                     document.getElementById('root')

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -7,7 +7,7 @@ import './index.css';
 import { Navbar, Container, Nav } from 'react-bootstrap'
 
 //import react router dom
-import {Switch, Route, Link, BrowserRouter, useHistory} from "react-router-dom";
+import {Switch, Route, Link, useHistory, BrowserRouter} from "react-router-dom";
 
 import logo from './image/logo.png'
 
@@ -61,9 +61,7 @@ const App = ( { isAdmin } ) => {
 
     const history = useHistory();
 
-    const storeSymptom = async (e) => {
-        e.preventDefault();
-
+    const handleRoleChange = () => {
         ReactDOM.render(
             <React.StrictMode>
                 <BrowserRouter>
@@ -72,10 +70,9 @@ const App = ( { isAdmin } ) => {
             </React.StrictMode>,
             document.getElementById('root')
         );
-        history.push('/')
+        history.push('/');
     };
 
-    console.log(isAdmin)
     return (
         <div>
             <Navbar collapseOnSelect expand="lg"
@@ -110,7 +107,7 @@ const App = ( { isAdmin } ) => {
                             {
                                 isAdmin? (
                                     <>
-                                        <Nav.Link onClick={storeSymptom} class="button">LOGOUT</Nav.Link>
+                                        <Nav.Link onClick={ handleRoleChange } class="button">LOGOUT</Nav.Link>
                                     </>
                                 ) : (
                                     <>
@@ -118,30 +115,38 @@ const App = ( { isAdmin } ) => {
                                     </>
                                 )
                             }
-                            {/*<button className="btn btn-outline-secondary navbar-btn" to="/login">Login</button>*/}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
 
             <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/about" component={About} />
-                <Route exact path="/about/illness" component={InformationIllness} />
-                <Route exact path="/illness" component={IllnessIndex} />
-                <Route exact path="/illness/create" component={IllnessCreate} />
-                <Route exact path="/illness/edit/:illnessId" component={IllnessEdit} />
-                <Route exact path="/symptom" component={SymptomIndex} />
-                <Route exact path="/symptom/create" component={SymptomCreate} />
-                <Route exact path="/symptom/edit/:symptomId" component={SymptomEdit} />
-                <Route exact path="/relation" component={RelationIndex} />
-                <Route exact path="/relation/create" component={RelationCreate} />
-                <Route exact path="/relation/edit/:relationId" component={RelationEdit} />
-                <Route exact path="/diagnosis" component={CreateDiagnosis} />
-                <Route exact path="/diagnosis/index" component={DiagnosisIndex} />
-                <Route exact path="/diagnosis/result/:patientId" component={DiagnosisResult} />
-                <Route exact path="/login" component={Login} />
+                {
+                    isAdmin? (
+                        <>
+                            <Route exact path="/dashboard" component={Dashboard} />
+                            <Route exact path="/illness" component={IllnessIndex} />
+                            <Route exact path="/illness/create" component={IllnessCreate} />
+                            <Route exact path="/illness/edit/:illnessId" component={IllnessEdit} />
+                            <Route exact path="/symptom" component={SymptomIndex} />
+                            <Route exact path="/symptom/create" component={SymptomCreate} />
+                            <Route exact path="/symptom/edit/:symptomId" component={SymptomEdit} />
+                            <Route exact path="/relation" component={RelationIndex} />
+                            <Route exact path="/relation/create" component={RelationCreate} />
+                            <Route exact path="/relation/edit/:relationId" component={RelationEdit} />
+                            <Route exact path="/diagnosis/index" component={DiagnosisIndex} />
+                        </>
+                    ) : (
+                        <>
+                            <Route exact path="/" component={Home} />
+                            <Route exact path="/about" component={About} />
+                            <Route exact path="/about/illness" component={InformationIllness} />
+                            <Route exact path="/diagnosis" component={CreateDiagnosis} />
+                            <Route exact path="/diagnosis/result/:patientId" component={DiagnosisResult} />
+                            <Route exact path="/login" component={Login} />
+                        </>
+                    )
+                }
             </Switch>
 
         </div>
