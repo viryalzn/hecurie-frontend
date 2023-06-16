@@ -79,6 +79,8 @@ function CreateRelation() {
                     Swal.fire('Oops..', 'penyakit wajib diisi', 'error');
                 } else if (error.response.data.message === 'symptomCode must contain at least 1 items') {
                     Swal.fire('Oops..', 'gejala wajib diisi', 'error');
+                } else if (error.response.data.message === 'Penyakit sudah memiliki relasi, silahkan edit gejala pada penyakit tersebut') {
+                    Swal.fire('Oops..', 'penyakit sudah memiliki relasi, silahkan edit gejala pada penyakit tersebut', 'error');
                 }
             })
 

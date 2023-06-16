@@ -95,7 +95,7 @@ function DiagnosisIndex() {
                                         <td>{ result.patientName }</td>
                                         <td>{ result.patientAge }</td>
                                         <td>{ result.patientGender }</td>
-                                        <td>{ result.diagnosis.confidence }</td>
+                                        <td>{ result.diagnosis.confidence + '%' }</td>
                                         <td>{ result.diagnosis.illness.map(diagnosis => (
                                             <tr>{ diagnosis.illnessName }</tr>
                                         ))}</td>
